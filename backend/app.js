@@ -1,16 +1,15 @@
-const express = require('express');
-const cors = require('cors');
-const mongoose = require('mongoose');
 const config = require('./utils/config');
-const logger = require('./utils/logger');
+const express = require('express');
+const app = express();
+const cors = require('cors');
 const blogsRouter = require('./controllers/blogs');
 const middleware = require('./utils/middleware');
+const logger = require('./utils/logger');
+const mongoose = require('mongoose');
 
-const app = express();
+logger.info(`Connecting to ${config.MONGODB_URI}`)
 
-logger.info(`Connecting to ${config.db.MONGODB_URI}`)
-
-mongoose.connect(config.db.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false })
+mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false })
     .then(() => {
         logger.info('Connected to MongoDB');
     })
